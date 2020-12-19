@@ -1,10 +1,24 @@
 version: '3'
 
 services:
-  web:
+
+  entrypoint: 
     build:
-      context: .
-    volumes:
-      - "./:/usr/share/nginx/html"
+      context: ./entrypoint
     ports:
-      - "8080:80"
+      - "80:80"
+    depends_on:
+      - app
+      - api
+
+  app:
+    build:
+      context: ./app
+    volumes:
+      - "./app:/usr/share/nginx/html"
+
+  api:
+    build:
+      context: ./api
+    volumes:
+      - "./api/:/usr/share/nginx/html"

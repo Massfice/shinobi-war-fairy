@@ -1,8 +1,20 @@
 version: '3'
 
 services:
-  web:
+
+  entrypoint: 
     build:
-      context: .
+      context: ./entrypoint
     ports:
       - "80:80"
+    depends_on:
+      - app
+      - api
+
+  app:
+    build:
+      context: ./app
+
+  api:
+    build:
+      context: ./api
