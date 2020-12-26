@@ -1,31 +1,37 @@
 version: '3'
 
 services:
+    entrypoint:
+        build:
+            context: ./entrypoint
+        ports:
+            - '80:80'
+        depends_on:
+            - app
+            - api
 
-  entrypoint: 
-    build:
-      context: ./entrypoint
-    ports:
-      - "80:80"
-    depends_on:
-      - app
-      - api
+    app:
+        build:
+            context: ./app
+        volumes:
+            - './app:/usr/share/nginx/html'
 
-  app:
-    build:
-      context: ./app
-    volumes:
-      - "./app:/usr/share/nginx/html"
+    api:
+        build:
+            context: ./api/dev
+        volumes:
+            - './api:/usr/share/nginx/html'
 
-  api:
-    build:
-      context: ./api/dev
-    volumes:
-      - "./api:/usr/share/nginx/html"
+    subforum-api:
+        build:
+            context: ./subforum-api
+            dockerfile: dev.Dockerfile
+        volumes:
+            - './subforum-api:/home/node/app'
 
-  subforum-api:
-    build:
-      context: ./subforum-api
-      dockerfile: dev.Dockerfile
-    volumes:
-      - "./subforum-api:/home/node/app"
+    discord-bot-api:
+        build:
+            context: ./discord-bot-api
+            dockerfile: dev.Dockerfile
+        volumes:
+            - './discord-bot-api:/home/node/app'
