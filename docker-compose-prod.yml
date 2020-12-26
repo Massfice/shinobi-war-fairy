@@ -1,25 +1,29 @@
 version: '3'
 
 services:
+    entrypoint:
+        build:
+            context: ./entrypoint
+        ports:
+            - '80:80'
+        depends_on:
+            - app
+            - api
 
-  entrypoint: 
-    build:
-      context: ./entrypoint
-    ports:
-      - "80:80"
-    depends_on:
-      - app
-      - api
+    app:
+        build:
+            context: ./app
 
-  app:
-    build:
-      context: ./app
+    api:
+        build:
+            context: ./api/prod
 
-  api:
-    build:
-      context: ./api/prod
+    subforum-api:
+        build:
+            context: ./subforum-api
+            dockerfile: prod.Dockerfile
 
-  subforum-api:
-    build:
-      context: ./subforum-api
-      dockerfile: prod.Dockerfile
+    discord-bot-api:
+        build:
+            context: ./discord-bot-api
+            dockerfile: prod.Dockerfile
