@@ -27,3 +27,5 @@ services:
         build:
             context: ./discord-bot-api
             dockerfile: prod.Dockerfile
+        environment:
+            - BOT_TOKEN=${DISCORD_BOT_TOKEN}
