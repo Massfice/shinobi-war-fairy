@@ -39,7 +39,7 @@ services:
             - MARIADB_DATABASE=bitnami_phpbb
             - BITNAMI_DEBUG=true
         volumes:
-            - /home/circleci/docker/forum-db-persistance:/bitnami/mariadb
+            - '/home/circleci/docker/forum-db-persistance:/bitnami/mariadb'
         expose:
             - 3306
         restart: unless-stopped
@@ -55,3 +55,5 @@ services:
             - SHINOBI_WAR_FAIRY_DB_PREFIX=phpbb
         depends_on:
             - forum-db
+        volumes:
+            - '/home/circleci/docker/forum-staging-persistance:/opt/bitnami/phpbb'

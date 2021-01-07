@@ -1,6 +1,6 @@
 FROM docker.io/bitnami/phpbb:3-debian-10
 
-COPY forum.zip ./
+COPY phpBB-3.0.12.zip ./
 
 COPY php.ini /opt/bitnami/php/etc/php.ini
 
@@ -8,11 +8,11 @@ USER root
 
 RUN install_packages unzip
 
-RUN unzip forum.zip
+RUN unzip phpBB-3.0.12.zip
 
 RUN rm -R /opt/bitnami/phpbb
 
-RUN  cp -r ./forum/. ./opt/bitnami/phpbb
+RUN  cp -r ./phpBB3/. ./opt/bitnami/phpbb
 
 EXPOSE 8080
 
