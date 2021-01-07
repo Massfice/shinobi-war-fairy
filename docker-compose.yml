@@ -9,6 +9,7 @@ services:
         depends_on:
             - app
             - api
+            - forum-staging
 
     app:
         build:
@@ -37,19 +38,20 @@ services:
             - './discord-bot-api:/home/node/app'
 
     forum-db:
-        image: 'docker.io/bitnami/mariadb:10.3-debian-10'
+        build:
+            context: ./forum-staging
+            dockerfile: db.Dockerfile
         environment:
             - ALLOW_EMPTY_PASSWORD=yes
             - MARIADB_USER=bn_phpbb
             - MARIADB_DATABASE=bitnami_phpbb
             - BITNAMI_DEBUG=true
-        # volumes:
-        #     - 'mariadb_data:/bitnami/mariadb'
+        volumes:
+            - /forum-db-persistance:/bitnami/mariadb
         expose:
             - 3306
         restart: always
     forum-staging:
-        # image: 'docker.io/bitnami/phpbb:3-debian-10'
         build:
             context: ./forum-staging
         environment:
@@ -58,12 +60,9 @@ services:
             - PHPBB_DATABASE_USER=bn_phpbb
             - PHPBB_DATABASE_NAME=bitnami_phpbb
             - ALLOW_EMPTY_PASSWORD=yes
-        # volumes:
-        #     - 'phpbb_data:/bitnami/phpbb'
+            - SHINOBI_WAR_FAIRY_DB_PREFIX=phpbb11
+        volumes:
+            - ./forum:/opt/bitnami/phpbb
+            - ./forum-staging/mods:/opt/bitnami/phpbb/store/mods
         depends_on:
             - forum-db
-volumes:
-    mariadb_data:
-        driver: local
-    phpbb_data:
-        driver: local
