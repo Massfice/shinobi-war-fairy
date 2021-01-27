@@ -5,7 +5,7 @@ services:
         build:
             context: ./entrypoint
         ports:
-            - '80:80'
+            - '8080:80'
         depends_on:
             - app
             - api
