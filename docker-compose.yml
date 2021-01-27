@@ -19,9 +19,10 @@ services:
 
     api:
         build:
-            context: ./api/dev
+            context: ./api
+            dockerfile: dev.Dockerfile
         volumes:
-            - './api:/usr/share/nginx/html'
+            - './api:/home/node/app'
 
     subforum-api:
         build:

@@ -17,7 +17,8 @@ services:
 
     api:
         build:
-            context: ./api/prod
+            context: ./api
+            dockerfile: prod.Dockerfile
 
     subforum-api:
         build:
