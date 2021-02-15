@@ -1,22 +1,23 @@
-FROM docker.io/bitnami/phpbb:3-debian-10
+FROM php:5.6-apache
 
 COPY forum.zip ./
 
-COPY php.ini /opt/bitnami/php/etc/php.ini
+COPY php.ini /usr/local/etc/php/php.ini
 
 USER root
 
-RUN install_packages unzip
+RUN apt-get update
+
+RUN apt-get install unzip
 
 RUN unzip forum.zip
 
-RUN rm -R /opt/bitnami/phpbb
+RUN  cp -r ./forum/. /var/www/html
 
-RUN  cp -r ./forum/. ./opt/bitnami/phpbb
+RUN chown -R www-data:www-data /var/www/html
 
-EXPOSE 8080
+RUN chmod -R 777 /var/www/html
 
-RUN chmod -R 777 ./opt/bitnami/phpbb
+RUN docker-php-ext-install mysqli pdo pdo_mysql && docker-php-ext-enable pdo_mysql
 
-ENTRYPOINT []
-CMD [ "/opt/bitnami/scripts/apache/run.sh" ]
+EXPOSE 80

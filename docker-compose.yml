@@ -46,7 +46,7 @@ services:
             - MARIADB_DATABASE=bitnami_phpbb
             - BITNAMI_DEBUG=true
         volumes:
-            - '/persistance/forum-db:/bitnami/mariadb'
+            - '/var/lib/boot2docker/.persistance/forum-db:/bitnami/mariadb'
         expose:
             - 3306
         restart: always
@@ -54,14 +54,8 @@ services:
         build:
             context: ./forum-staging
         environment:
-            - PHPBB_DATABASE_HOST=forum-db
-            - PHPBB_DATABASE_PORT_NUMBER=3306
-            - PHPBB_DATABASE_USER=bn_phpbb
-            - PHPBB_DATABASE_NAME=bitnami_phpbb
-            - ALLOW_EMPTY_PASSWORD=yes
             - SHINOBI_WAR_FAIRY_DB_PREFIX=phpbb
         volumes:
-            - './forum:/opt/bitnami/phpbb'
-            - './forum-staging/mods:/opt/bitnami/phpbb/store/mods'
+            - './forum:/var/www/html'
         depends_on:
             - forum-db
