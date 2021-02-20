@@ -1,0 +1,14 @@
+{
+    "name": "phpbbmodgentool",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon -L --ext '*' --ignore './generated' index.js"
+    },
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {
+        "nodemon": "^2.0.7"
+    }
+}

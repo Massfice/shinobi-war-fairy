@@ -50,6 +50,7 @@ services:
         expose:
             - 3306
         restart: always
+
     forum-staging:
         build:
             context: ./forum-staging
@@ -59,3 +60,12 @@ services:
             - './forum:/var/www/html'
         depends_on:
             - forum-db
+
+    tools-phpbb-mod-gen:
+        build:
+            context: ./phpbbModGenTool
+        volumes:
+            - './forum:/home/node/app/new_forum'
+            - './phpbbModGenTool/index.js:/home/node/app/index.js'
+            - './phpbbModGenTool/package.json:/home/node/app/package.json'
+            - './phpBBMod:/home/node/app/generated'
